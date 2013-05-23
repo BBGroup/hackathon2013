@@ -35,6 +35,28 @@ public class MainActivity extends Activity {
 			}
 		});
         
+        Button esinoButton = (Button) findViewById(R.id.metaurobutton);
+        esinoButton.setOnClickListener(new OnClickListener() {
+        	
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+        Button cesanoButton = (Button) findViewById(R.id.metaurobutton);
+        cesanoButton.setOnClickListener(new OnClickListener() {
+        	
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
         
         
     }
