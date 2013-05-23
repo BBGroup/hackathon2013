@@ -10,16 +10,18 @@ import android.widget.ListView;
 
 public class BasinActivity extends Activity{
 	
+	public SqliteManager db=null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		this.setContentView(it.univpm.hackathon2013.R.layout.basin_activity);
 		ListView lv=(ListView)this.findViewById(R.id.lista);
 		
-		SqliteManager db=new SqliteManager(getApplicationContext());
+		db=new SqliteManager(getApplicationContext());
         db.open();  //apriamo il db
        
-        if(db.fetchStazione().getCount()==0){
+        if(db.fetchStazione().getCount()<1){
         	db.inserisciBacino(0, "Misa");
         	db.inserisciBacino(1, "Cesano");
         	db.inserisciBacino(2, "Metauro");
@@ -67,10 +69,12 @@ public class BasinActivity extends Activity{
         	db.inserisciStazione("Campodiegoli","502",1,3);
         	db.inserisciStazione("Esanatoglia 2","503",1,3);
         	
+        	db.inserisciLettura("20/10/2013", "13:20", 0,"026"); 
         }
         
         
         Cursor c=db.fetchStazione();
+        
         if(c.getCount()>0){
         	startManagingCursor(c);
         SimpleCursorAdapter adapter1=new SimpleCursorAdapter(

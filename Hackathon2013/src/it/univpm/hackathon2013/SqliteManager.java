@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SqliteManager{  
 
@@ -29,18 +30,13 @@ public class SqliteManager{
             mDb.close();
     }
    
-   
-    //i seguenti 2 metodi servono per la lettura/scrittura del db. aggiungete e modificate a discrezione
-   // consiglio:si potrebbe creare una classe Prodotto, i quali oggetti verrebbero passati come parametri dei seguenti metodi, rispettivamente ritornati. Lacio a voi il divertimento
-
-   
     public void inserisciBacino(int id, String nome){ //metodo per inserire i dati
             ContentValues cv=new ContentValues();
-            cv.put("id", id);
+            cv.put("_id", id);
             cv.put("nome", nome);
             mDb.insert("Bacino", null, cv);
     }
-    public void inserisciLettura(String data, String ora, String valore, String id_stazione){ //metodo per inserire i dati
+    public void inserisciLettura(String data, String ora, double valore, String id_stazione){ //metodo per inserire i dati
         ContentValues cv=new ContentValues();
         cv.put("data", data);
         cv.put("ora", ora);
@@ -57,53 +53,69 @@ public class SqliteManager{
         mDb.insert("Stazione", null, cv);
     }
    
-    public Cursor fetchProducts(){ //metodo per fare la query di tutti i dati
-            return mDb.query("Bacino", null,null,null,null,null,null);              
+    public Cursor fetchStazione(){ 
+    	Cursor cursor=null;
+    	try{
+            cursor=mDb.rawQuery("" +
+            		"SELECT Lettura._id as _id," +
+            		"Stazione.nome as nome, " +
+            		"Lettura.data as data, " +
+            		"Lettura.ora as ora, " +
+            		"Lettura.valore as valore" +
+            		" FROM Stazione, Bacino, Lettura" +
+            		" WHERE Stazione.id_bacino = Bacino._id AND Lettura.id_stazione = Stazione.codice",null);
+            Log.e("TEXT","Cursor: colonne:"+cursor.getColumnCount()+" righe:"+cursor.getCount());
+    	}catch(Exception e){
+    		Log.e("SQL","ERRORE QUERY");
+    		e.printStackTrace();
+    	}finally{
+    		
+    	}
+    	return cursor;
     }
 
   
 
-    private static final String CREAZIONE_BACINO = "CREATE TABLE IF NOT EXISTS Bacino(" +
-    		"id integer primary key, " +
-    		"nome text not null);";
-    private static final String CREAZIONE_BACINOSTAZIONE="CREATE TABLE IF NOT EXISTS BacinoStazione(" +
+    private static final String CREAZIONE_BACINO = "CREATE TABLE Bacino( " +
+    		"_id integer primary key, " +
+    		"nome text not null)";
+    private static final String CREAZIONE_STAZIONE="CREATE TABLE Stazione( " +
     		"_id integer primary key autoincrement," +
-    		"id_bacino integer not null," +
-    		"id_stazione integer not null)";
-    private static final String CREAZIONE_STAZIONE="CREATE TABLE IF NOT EXISTS Stazione(" +
-    		"_id integer primary key," +
-    		"codice string primary key," +
-    		"nome text not null" +
+    		"codice string," +
+    		"nome text not null," +
     		"tipo integer not null," +
     		"id_bacino integer not null)";
-    private static final String CREAZIONE_LETTURA="CREATE TABLE IF NOT EXISTS Lettura (" +
+    private static final String CREAZIONE_LETTURA="CREATE TABLE Lettura ( " +
     		"_id integer primary key autoincrement, "+
     		"data text not null, "+
     		"ora text not null,"+
     		"valore text not null,"+
-    		"id_stazione integer not null);";
+    		"id_stazione text not null)";
     
     
 
-    private class DbHelper extends SQLiteOpenHelper { //classe che ci aiuta nella creazione del db
+    private class DbHelper extends SQLiteOpenHelper { 
 
             public DbHelper(Context context, String name, CursorFactory factory,int version) {
                     super(context, name, factory, version);
             }
 
             @Override
-            public void onCreate(SQLiteDatabase _db) { //solo quando il db viene creato, creiamo la tabella
+            public void onCreate(SQLiteDatabase _db) { 
+            	try{
                     _db.execSQL(CREAZIONE_BACINO);
                     _db.execSQL(CREAZIONE_STAZIONE);
                     _db.execSQL(CREAZIONE_LETTURA);
+            	}catch(Exception e){
+            		Log.e("SQL","ERRORE CREAZIONE!!!!");
+            	}
             }
 
-            @Override
-            public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
-                    //qui mettiamo eventuali modifiche al db, se nella nostra nuova versione della app, il db cambia numero di versione
-
-            }
-
+			@Override
+			public void onUpgrade(SQLiteDatabase db, int oldVersion,int newVersion) {
+				// TODO Auto-generated method stub
+				
+			}
     }
            
 
