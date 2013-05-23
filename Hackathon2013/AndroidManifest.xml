@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name="it.univpm.hackathon2013.BasinActivity"
-            android:label="Basin Watcher"
+            android:label="Basin Watcher">
         </activity>
     </application>
 
