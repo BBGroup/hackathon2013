@@ -34,12 +34,13 @@ public class SqliteManager{
    // consiglio:si potrebbe creare una classe Prodotto, i quali oggetti verrebbero passati come parametri dei seguenti metodi, rispettivamente ritornati. Lacio a voi il divertimento
 
    
-    public void inserisciBacino(String nome){ //metodo per inserire i dati
+    public void inserisciBacino(int id, String nome){ //metodo per inserire i dati
             ContentValues cv=new ContentValues();
+            cv.put("id", id);
             cv.put("nome", nome);
             mDb.insert("Bacino", null, cv);
     }
-    public void inserisciLettura(String data, String ora, String valore, int id_stazione){ //metodo per inserire i dati
+    public void inserisciLettura(String data, String ora, String valore, String id_stazione){ //metodo per inserire i dati
         ContentValues cv=new ContentValues();
         cv.put("data", data);
         cv.put("ora", ora);
@@ -47,32 +48,42 @@ public class SqliteManager{
         cv.put("id_stazione", id_stazione);
         mDb.insert("Lettura", null, cv);
     }
-    public void inserisciStazione(String nome,int tipo){ //metodo per inserire i dati
+    public void inserisciStazione(String nome, String codice, int tipo, int id_bacino){ //metodo per inserire i dati
         ContentValues cv=new ContentValues();
+        cv.put("codice", codice);
         cv.put("nome", nome);
-        cv.put("nome", tipo);
+        cv.put("tipo", tipo);
+        cv.put("id_bacino", id_bacino);
         mDb.insert("Stazione", null, cv);
     }
    
     public Cursor fetchProducts(){ //metodo per fare la query di tutti i dati
-            return mDb.query(ProductsMetaData.PRODUCTS_TABLE, null,null,null,null,null,null);              
+            return mDb.query("Bacino", null,null,null,null,null,null);              
     }
 
   
 
     private static final String CREAZIONE_BACINO = "CREATE TABLE IF NOT EXISTS Bacino(" +
-    		"_id integer primary key autoincrement, " +
+    		"id integer primary key, " +
     		"nome text not null);";
+    private static final String CREAZIONE_BACINOSTAZIONE="CREATE TABLE IF NOT EXISTS BacinoStazione(" +
+    		"_id integer primary key autoincrement," +
+    		"id_bacino integer not null," +
+    		"id_stazione integer not null)";
+    private static final String CREAZIONE_STAZIONE="CREATE TABLE IF NOT EXISTS Stazione(" +
+    		"_id integer primary key," +
+    		"codice string primary key," +
+    		"nome text not null" +
+    		"tipo integer not null," +
+    		"id_bacino integer not null)";
     private static final String CREAZIONE_LETTURA="CREATE TABLE IF NOT EXISTS Lettura (" +
     		"_id integer primary key autoincrement, "+
     		"data text not null, "+
     		"ora text not null,"+
     		"valore text not null,"+
     		"id_stazione integer not null);";
-    private static final String CREAZIONE_STAZIONE="CREATE TABLE IF NOT EXISTS Stazione(" +
-    		"_id integer primarykey autoincrement," +
-    		"nome text not null" +
-    		"tipo integer not null);";
+    
+    
 
     private class DbHelper extends SQLiteOpenHelper { //classe che ci aiuta nella creazione del db
 
