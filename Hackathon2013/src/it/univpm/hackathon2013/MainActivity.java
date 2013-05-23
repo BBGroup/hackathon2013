@@ -17,11 +17,25 @@ public class MainActivity extends Activity {
         Button misaButton = (Button) findViewById(R.id.misabutton);
         misaButton.setOnClickListener(new OnClickListener(){
         	
+        	@Override
         	public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
 			}
         });
+        
+        Button metauroButton = (Button) findViewById(R.id.metaurobutton);
+        metauroButton.setOnClickListener(new OnClickListener() {
+        	
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+        
         
     }
 
