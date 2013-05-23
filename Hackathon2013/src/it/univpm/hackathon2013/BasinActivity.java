@@ -1,7 +1,9 @@
 package it.univpm.hackathon2013;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -13,13 +15,11 @@ public class BasinActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		this.setContentView(it.univpm.hackathon2013.R.layout.basin_activity);
 		ListView lv=(ListView)this.findViewById(R.id.lista);
-		ListAdapter adapter=createAdapter();
-		lv.setAdapter(adapter);
 		
 		SqliteManager db=new SqliteManager(getApplicationContext());
         db.open();  //apriamo il db
        
-        if(db.fetchProducts().getCount()==0){
+        if(db.fetchStazione().getCount()==0){
         	db.inserisciBacino(0, "Misa");
         	db.inserisciBacino(1, "Cesano");
         	db.inserisciBacino(2, "Metauro");
@@ -68,32 +68,26 @@ public class BasinActivity extends Activity{
         	db.inserisciStazione("Esanatoglia 2","503",1,3);
         	
         }
-       
-       
-
-        Cursor c=db.fetchProducts(); // query
-        startManagingCursor(c);
-
-
-       
-       
-        SimpleCursorAdapter adapter=new SimpleCursorAdapter( //semplice adapter per i cursor
-                        this,
-                        R.layout.product, //il layout di ogni riga/prodotto
-                        c,
-                        new String[]{MyDatabase.ProductsMetaData.PRODUCT_NAME_KEY,MyDatabase.ProductsMetaData.PRODUCT_PRICE_KEY},//questi colonne
-                        new int[]{R.id.nameTv,R.id.priceTv});//in queste views
-       
-       
-
-       
-       
-        productsLv.setAdapter(adapter); //la listview ha questo adapter
-       
+        
+        
+        Cursor c=db.fetchStazione();
+        if(c.getCount()>0){
+        	startManagingCursor(c);
+        SimpleCursorAdapter adapter1=new SimpleCursorAdapter(
+        		this, 
+        		R.layout.stazione_list_item,
+        		c,
+        		new String[]{"nome","data","ora","valore"},
+        		new int[]{R.id.nome,R.id.data,R.id.ora,R.id.valore});
+        lv.setAdapter(adapter1); //la listview ha questo adapter*/
+        }else{
+        	lv.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new String[]{"Nessun dato pervenuto"}));
+        }
+        db.close();
        
         //qui vediamo invece come reperire i dati e usarli, in questo caso li stampiamo in una textview
        
-        int nameCol=c.getColumnIndex(MyDatabase.ProductsMetaData.PRODUCT_NAME_KEY);  //indici delle colonne
+        /*int nameCol=c.getColumnIndex(MyDatabase.ProductsMetaData.PRODUCT_NAME_KEY);  //indici delle colonne
         int priceCol=c.getColumnIndex(MyDatabase.ProductsMetaData.PRODUCT_PRICE_KEY);      
        
         if(c.moveToFirst()){  //se va alla prima entry, il cursore non è vuoto
@@ -102,9 +96,7 @@ public class BasinActivity extends Activity{
                         productsTv.append("Product Name:"+c.getString(nameCol)+", Price:"+c.getInt(priceCol)+"\n"); //estrazione dei dati dalla entry del cursor
                                        
                         } while (c.moveToNext());//iteriamo al prossimo elemento
-        }
-       
-        db.close();
+        }*/
 		
 	}
 	

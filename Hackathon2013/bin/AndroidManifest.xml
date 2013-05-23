@@ -3,10 +3,11 @@
     package="it.univpm.hackathon2013"
     android:versionCode="1"
     android:versionName="1.0" >
-	<!--ciao  -->
+
+    <!-- ciao -->
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="10" />
+        android:targetSdkVersion="8" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="it.univpm.hackathon2013.BasinActivity"
+            android:label="Basin Watcher" >
+        </activity>
+        <activity
+            android:name="it.univpm.hackathon2013.ChartActivity"
+            android:label="@string/title_activity_chart" >
+        </activity>
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
