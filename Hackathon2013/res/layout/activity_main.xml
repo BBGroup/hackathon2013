@@ -14,4 +14,12 @@
         android:layout_height="wrap_content"
         android:text="fuck" />
 
+    <RadioButton
+        android:id="@+id/Misa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv"
+        android:layout_centerHorizontal="true"
+        android:text="Fiume Misa" />
+
 </RelativeLayout>
