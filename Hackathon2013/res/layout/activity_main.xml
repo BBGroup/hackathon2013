@@ -6,20 +6,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#000055"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fuck" />
-
-    <RadioButton
-        android:id="@+id/Misa"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/metaurobutton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv"
         android:layout_centerHorizontal="true"
-        android:text="Fiume Misa" />
+        android:layout_marginTop="18dp"
+        android:text="Bacino Metauro" />
+
+    <Button
+        android:id="@+id/cesanobutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tv"
+        android:layout_below="@+id/metaurobutton"
+        android:text="Bacino Cesano" />
+
+    <Button
+        android:id="@+id/misabutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cesanobutton"
+        android:layout_centerHorizontal="true"
+        android:text="Bacino Misa" />
+
+    <Button
+        android:id="@+id/esinobutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/misabutton"
+        android:layout_below="@+id/misabutton"
+        android:text="Bacino Esino" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:text="Scegli il tuo bacino"
+        android:textSize="20dp"
+        android:textColor="#FFD700"
+        android:textStyle="bold" />
 
 </RelativeLayout>
