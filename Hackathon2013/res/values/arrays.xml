@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string-array name="areaChoiceEntries">
+        <item name="GPS">GPS</item>
+        <item name="Manuale">Manuale</item>
+    </string-array>
+    
+    <string-array name="areaChoiceValues">
+        <item name="GPS">1</item>
+        <item name="Manuale">0</item>
+    </string-array>
+    
+    <string-array name="manualChoiceEntries">
+        <item name="Esino">Esino</item>
+        <item name="Misa">Misa</item>
+        <item name="Cesano">Cesano</item>
+        <item name="Metauro">Metauro</item>
+    </string-array>
+    
+    <string-array name="manualChoiceValues">
+        <item name="Esino">esino</item>
+        <item name="Misa">misa</item>
+        <item name="Cesano">cesano</item>
+        <item name="Metauro">metauro</item>
+    </string-array>
+    
+</resources>

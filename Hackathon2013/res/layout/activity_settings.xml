@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:title="Modalità di scelta dell'area">
+        
+        <ListPreference
+            android:name="choiceArea"
+            android:key="area"
+            android:title="Modalità scelta area"
+            android:entries="@array/areaChoiceEntries"
+            android:entryValues="@array/areaChoiceValues"/>
+     
+    </PreferenceCategory>
+        
+	<PreferenceCategory
+	    android:title="Aree disponibili">
+	    
+	    <ListPreference
+	        android:name="manualChoice"
+	        android:key="manual"
+	        android:title="Scelta manuale"
+	        android:entries="@array/manualChoiceEntries"
+	        android:entryValues="@array/manualChoiceValues"
+	        />
+	    
+	</PreferenceCategory>
+        
+        
+        
+        
+        
+    
+    
+</PreferenceScreen>
