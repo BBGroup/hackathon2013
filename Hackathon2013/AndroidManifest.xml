@@ -3,7 +3,7 @@
     package="it.univpm.hackathon2013"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<!--ciao  -->
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="10" />
