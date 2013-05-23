@@ -12,24 +12,34 @@ import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import android.app.Activity;
+import android.database.Cursor;
 
 public class HtmlParser {
 	
 	private Activity activity;
+	SqliteManager sm=new SqliteManager(activity);
 //	private static Timer timer=null;
 //	public  ArrayList value= new ArrayList();
 	
 	
-public HtmlParser(Activity activity,String id_stazione,int tipo){
+public HtmlParser(Activity activity,int bacino){
 	super();
 	this.activity=activity;
-	if(tipo==0){	
-		getLivello(id_stazione);
-	}
-	if(tipo==1){
-		getPioggia(id_stazione);
-	}
-  
+	Cursor cr=sm.getCodiceStazioneETipoByIdBacino(bacino);
+	activity.startManagingCursor(cr);
+	while(!cr.isAfterLast()){
+		String codice=cr.getString(cr.getColumnIndex("codice"));
+		int tipo=Integer.parseInt(cr.getString(cr.getColumnIndex("tipo")));
+		if(tipo==0){	
+			getLivello(codice);
+		}
+		if(tipo==1){
+			getPioggia(codice);
+		}
+    	cr.moveToNext();
+    	
+    }
+	cr.close();
   
 }
 
@@ -72,7 +82,7 @@ private void getLivello(String id_stazione){
              	livello=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
              	livello = livello.replace(',', '.').trim();
              	if(!data_livello.equals("")){
-             		((BasinActivity)activity).db.inserisciLettura(data_livello, data_livello, Double.parseDouble(livello), id_stazione);
+             		((BasinActivity)activity).db.inserisciLettura(data_livello, data_livello,livello, id_stazione);
              	}
              	
              	//Double diff=Double.parseDouble(livello)-rilievo_valore.get(2);
@@ -102,6 +112,8 @@ private void getLivello(String id_stazione){
 }
 
 private void getPioggia(String id_stazione){
+	String data_pioggia="";
+	String mm_pioggia;
 	 try{
 	    	
          URL url = new URL("http://www.protezionecivile.marche.it/monitoraggio/Pioggia.aspx");
@@ -115,7 +127,7 @@ private void getPioggia(String id_stazione){
          while((line = bfr.readLine())!= null) {
          	if(line.contains("StationsData['station"+id_stazione+"']")){
          			
-         		String data_pioggia=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
+         		data_pioggia=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
          	
          			activity.runOnUiThread(new Runnable() {
           		       	  public void run() {
@@ -127,8 +139,11 @@ private void getPioggia(String id_stazione){
          		
          	}
          	if(line.contains("StationsValore['station"+id_stazione+"']")){
-              	String mm_pioggia=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
+              	mm_pioggia=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
              	mm_pioggia =mm_pioggia.replace(',', '.').trim();
+             	if(!data_pioggia.equals("")){
+             		((BasinActivity)activity).db.inserisciLettura(data_pioggia, data_pioggia, mm_pioggia, id_stazione);
+             	}
 //             	Double diff=Double.parseDouble(mm_pioggia)-rilievo_valore.get(0);
 //             	value.set(1,mm_pioggia);
 //             	if(rilievo_valore.get(0)>0.0 && Double.parseDouble(mm_pioggia) != rilievo_valore.get(0)){

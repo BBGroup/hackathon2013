@@ -36,7 +36,7 @@ public class SqliteManager{
             cv.put("nome", nome);
             mDb.insert("Bacino", null, cv);
     }
-    public void inserisciLettura(String data, String ora, double valore, String id_stazione){ //metodo per inserire i dati
+    public void inserisciLettura(String data, String ora, String valore, String id_stazione){
         ContentValues cv=new ContentValues();
         cv.put("data", data);
         cv.put("ora", ora);
@@ -44,7 +44,7 @@ public class SqliteManager{
         cv.put("id_stazione", id_stazione);
         mDb.insert("Lettura", null, cv);
     }
-    public void inserisciStazione(String nome, String codice, int tipo, int id_bacino){ //metodo per inserire i dati
+    public void inserisciStazione(String nome, String codice, int tipo, int id_bacino){
         ContentValues cv=new ContentValues();
         cv.put("codice", codice);
         cv.put("nome", nome);
@@ -72,6 +72,17 @@ public class SqliteManager{
     		
     	}
     	return cursor;
+    }
+    
+    public Cursor getCodiceStazioneETipoByIdBacino(int id_bacino){
+    	Cursor c=mDb.rawQuery("SELECT DISTINCT " +
+    			"Stazione._id as _id, " +
+    			"Stazione.codice as codice, " +
+    			"Stazione.tipo as tipo " +
+    			"FROM Stazione, Bacino " +
+    			"WHERE Stazione.id_bacino = "+id_bacino, null);
+    	Log.e("TEXT","Cursor: colonne:"+c.getColumnCount()+" righe:"+c.getCount());
+    	return c;
     }
 
   

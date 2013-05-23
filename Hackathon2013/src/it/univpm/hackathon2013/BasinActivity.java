@@ -69,24 +69,29 @@ public class BasinActivity extends Activity{
         	db.inserisciStazione("Campodiegoli","502",1,3);
         	db.inserisciStazione("Esanatoglia 2","503",1,3);
         	
-        	db.inserisciLettura("20/10/2013", "13:20", 0,"026"); 
+        	//db.inserisciLettura("20/10/2013", "13:20", 0,"026"); 
         }
-        
+        Bundle bundle = getIntent().getExtras();
+		if(bundle!=null){
+			//imposto i nomi dei giocatori
+			 HtmlParser hp=new HtmlParser(this,(bundle.getInt("basin",0)));
+		}
+       
         
         Cursor c=db.fetchStazione();
-        
         if(c.getCount()>0){
         	startManagingCursor(c);
-        SimpleCursorAdapter adapter1=new SimpleCursorAdapter(
+        	SimpleCursorAdapter adapter1=new SimpleCursorAdapter(
         		this, 
         		R.layout.stazione_list_item,
         		c,
         		new String[]{"nome","data","ora","valore"},
         		new int[]{R.id.nome,R.id.data,R.id.ora,R.id.valore});
-        lv.setAdapter(adapter1); //la listview ha questo adapter*/
+        	lv.setAdapter(adapter1); //la listview ha questo adapter*/
         }else{
         	lv.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new String[]{"Nessun dato pervenuto"}));
         }
+	
         db.close();
        
         //qui vediamo invece come reperire i dati e usarli, in questo caso li stampiamo in una textview

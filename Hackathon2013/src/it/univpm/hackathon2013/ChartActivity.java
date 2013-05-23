@@ -1,5 +1,6 @@
 package it.univpm.hackathon2013;
 
+import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
@@ -7,10 +8,13 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Menu;
+import android.widget.LinearLayout;
 
 public class ChartActivity extends Activity {
 	
@@ -27,7 +31,19 @@ public class ChartActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chart);
 		
+		
+		
 		graphInitialization();
+		
+		if (multipleChartView==null){
+        	LinearLayout layout = (LinearLayout) findViewById(R.id.graphView);
+            multipleChartView=ChartFactory.getLineChartView(this, multipleDataset, multipleRenderer);
+            layout.addView(multipleChartView);
+            
+        }
+        else{
+        	multipleChartView.repaint();
+        }
 		
 		
 		

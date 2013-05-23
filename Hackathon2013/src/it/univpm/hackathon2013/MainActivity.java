@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,17 +21,20 @@ public class MainActivity extends Activity {
 //	String cesano="cesanoBasin";
 //	String esino="esinoBasin";
 //	String metauro="metauroBasin";
-	
+	double latitudine=0;
+	double longitudine=0;
 	SharedPreferences preferences;
 	String choiceMod;
 	String basin;
 	int basinInt;
 	int modInt;
-	
+	int bacino=-1;
 	Button misaButton;
 	Button esinoButton;
 	Button cesanoButton;
 	Button metauroButton;
+	
+	Button chartButton;
 	
 	TextView selArea;
 	
@@ -40,6 +44,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         getPreferences();
+        
+        Log.d("debuglog","gettedpreferences");
+        selArea = (TextView) findViewById(R.id.selectedArea);
+        
+        
+        gpsCall();
+       
         
         misaButton = (Button) findViewById(R.id.misabutton);
         misaButton.setOnClickListener(new OnClickListener()
@@ -86,28 +97,60 @@ public class MainActivity extends Activity {
         selAreaSetText();
         
         
-        
+        chartButton = (Button) findViewById(R.id.chartButton);
+        chartButton.setOnClickListener(new OnClickListener() {
+        	@Override
+			public void onClick(View v) {
+        		Intent intent = new Intent(MainActivity.this , ChartActivity.class);
+                
+				startActivity( intent  );
+			}
+		});
         
         
     }
     
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	Log.d("debuglog", "onresume");
+    	getPreferences();
+    	gpsCall();
+    	selAreaSetText();
+    }
+    
     public void selAreaSetText(){
-    	if (modInt==0){
-    		switch (basinInt){
-    		case 0:
-    			selArea.setText("Bacino selezionato: Misa");
-    			break;
-    		case 1:
-    			selArea.setText("Bacino selezionato: Cesano");
-    			break;
-    		case 2:
-    			selArea.setText("Bacino selezionato: Metauro");
-    			break;
-    		case 3:
-    			selArea.setText("Bacino selezionato: Esino");
-    			break;
-    		}
-    	}
+    	//runOnUiThread(new Runnable() {
+	       //	  public void run() {
+	       		if(modInt==1){
+	        		basinInt=bacino;
+	        		Log.d("debuglog","gpsmod");
+	        	}
+	        	//if (modInt==0){
+	        		Log.d("debuglog","manmod");
+	        		switch (basinInt){
+	        		case 0:
+	        			Log.d("debuglog","misa");
+	        			selArea.setText("Bacino selezionato: Misa");
+	        			break;
+	        		case 1:
+	        			Log.d("debuglog","cesano");
+	        			selArea.setText("Bacino selezionato: Cesano");
+	        			break;
+	        		case 2:
+	        			Log.d("debuglog","metauro");
+	        			selArea.setText("Bacino selezionato: Metauro");
+	        			break;
+	        		case 3:
+	        			Log.d("debuglog","esino");
+	        			selArea.setText("Bacino selezionato: Esino");
+	        			break;
+	        		}
+	        	//}
+	       	 // }
+	       	//});
+    	
+    	
     }
     
 //    public void buttonColor(){
@@ -135,6 +178,24 @@ public class MainActivity extends Activity {
 //        
 //        }
 //    }
+    
+    public void gpsCall(){
+    	if(modInt==1){
+        	Log.d("debuglog","startinglocation");
+        	GpsPosition gps = new GpsPosition(this);
+        
+          
+        if(gps.canGetLocation()){
+             
+            latitudine = gps.getLatitude();
+            longitudine = gps.getLongitude();
+              
+            Log.d("debuglog","latitude: "+String.valueOf(latitudine));
+            Log.d("debuglog","longitude: "+String.valueOf(longitudine));
+        }
+        searchlocation();
+        }
+    }
     
     public void getPreferences(){
     	preferences=PreferenceManager.getDefaultSharedPreferences(this);
@@ -167,5 +228,23 @@ public class MainActivity extends Activity {
     	return true;
     	
     }
+    public void searchlocation(){
+    	double min=-1;
+    	
+    	double[] poslatitudini=new double[] {43.66256,43.70164,43.77779,43.53909};
+    	double[] poslongitudini=new double[] {13.16488,13.07716,13.00232,13.29620};
+    	for(int i=0;i<4;i++){
+    		double ris=Math.sqrt(Math.pow((latitudine-poslatitudini[i]), 2)+Math.pow((longitudine-poslongitudini[i]), 2));
+    		if(bacino==-1 ||ris<min){
+    			min=ris;
+    			bacino=i;
+    			Log.d("debuglog","bacino: "+String.valueOf(bacino));
+    			
+    		}
+    	}
+    	selAreaSetText();
+    }
+    
+    
     
 }
