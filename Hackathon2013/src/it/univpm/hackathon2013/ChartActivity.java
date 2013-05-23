@@ -29,6 +29,8 @@ public class ChartActivity extends Activity {
 		
 		graphInitialization();
 		
+		
+		
 	}
 
 //	@Override
@@ -65,5 +67,33 @@ public class ChartActivity extends Activity {
 		
     	
     }
+	
+	public void adaptGraphToBasin(){
+    	multipleRenderer.setRange(new double[] {0,168,0,2});
+    	multipleRenderer.setXTitle("Hours");
+		multipleRenderer.setYTitle("Basin Level [m]");
+    }
+	
+	public void adaptGraphToRain(){
+    	multipleRenderer.setRange(new double[] {0,7,0,100});
+    	multipleRenderer.setXTitle("Days");
+		multipleRenderer.setYTitle("Rain Level [mm]");
+	}
+	
+	public void addValueToGraph (int index, double value, int type){
+		if (type==0){
+			basinDataset.add(index, value);
+			if (multipleChartView != null){
+				multipleChartView.repaint();
+			}
+		}
+		else if (type==1){
+			rainDataset.add(index, value);
+			if (multipleChartView != null){
+				multipleChartView.repaint();
+			}
+		}
+	}
 
 }
+
