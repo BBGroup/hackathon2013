@@ -442,7 +442,7 @@ public class MainActivity extends Activity {
 
         // Titolo e testo della notifica
         notificationBuilder.setContentTitle("Calamity Watcher Notification");
-        notificationBuilder.setContentText("Allerta idrogeologica area Misa");
+        notificationBuilder.setContentText("Allerta idrogeologica area ?");
 
         // Testo che compare nella barra di stato non appena compare la notifica
         notificationBuilder.setTicker("Allerta!");
