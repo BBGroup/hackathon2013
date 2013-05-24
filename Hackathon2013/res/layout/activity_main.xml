@@ -98,7 +98,7 @@
         android:layout_below="@+id/esinobutton"
         android:layout_marginTop="22dp"
         android:text="Visualizza Grafici" /> -->
-     <Button
+     <!-- <Button
         android:id="@+id/notifyButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
         android:layout_alignRight="@+id/esinobutton"
         android:layout_below="@+id/esinobutton"
         android:layout_marginTop="22dp"
-        android:text="Notifica" />
+        android:text="Notifica" />  -->
 
 
 </RelativeLayout>

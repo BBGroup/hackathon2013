@@ -38,14 +38,14 @@ public class MainActivity extends Activity {
 	String basin;
 	int basinInt;
 	int modInt;
-	int bacino=-1;
+	int bacino=0;
 //	Button misaButton;
 //	Button esinoButton;
 //	Button cesanoButton;
 //	Button metauroButton;
 	
 //	Button chartButton;
-	Button notifyButton;
+//	Button notifyButton;
 	ImageView mappa;
 	
 	TextView selArea;
@@ -57,8 +57,8 @@ public class MainActivity extends Activity {
         
         getPreferences();
         
-        HtmlParser _parser = new HtmlParser(this, basinInt);
-        _parser.refresh(basinInt);
+//        HtmlParser _parser = new HtmlParser(this, basinInt);
+//        _parser.refresh(basinInt);
         
         Log.d("debuglog","gettedpreferences");
         selArea = (TextView) findViewById(R.id.selectedArea);
@@ -112,14 +112,14 @@ public class MainActivity extends Activity {
         
   		mNotificationManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
         
-      notifyButton = (Button) findViewById(R.id.notifyButton);
-      notifyButton.setOnClickListener(new OnClickListener() {
-      	@Override
-			public void onClick(View v) {
-      		sendSimpleNotification();
-
-			}
-		});
+//      notifyButton = (Button) findViewById(R.id.notifyButton);
+//      notifyButton.setOnClickListener(new OnClickListener() {
+//      	@Override
+//			public void onClick(View v) {
+//      		sendSimpleNotification();
+//
+//			}
+//		});
         
         
         
@@ -296,8 +296,8 @@ public class MainActivity extends Activity {
     
     public void getPreferences(){
     	preferences=PreferenceManager.getDefaultSharedPreferences(this);
-    	choiceMod=(preferences.getString("area", "-1"));
-    	basin=(preferences.getString("manual", "-1"));
+    	choiceMod=(preferences.getString("area", "0"));
+    	basin=(preferences.getString("manual", "0"));
     	basinInt=Integer.parseInt(basin);
     	modInt=Integer.parseInt(choiceMod);
     }
@@ -307,8 +307,8 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	menu.add(Menu.NONE, 1, 1, "Settings");
     	menu.add(Menu.NONE, 2, 2, "Info");
-    	//menu.add(Menu.NONE, 3, 3, "Grafico");
     	menu.add(Menu.NONE, 3, 3, "Quit");
+    	menu.add(Menu.NONE,4,4,"Grafico");
         return true;
     }
     
@@ -327,6 +327,11 @@ public class MainActivity extends Activity {
     	case 3:
     		finish();
     		return true;
+    	case 4:
+    		Intent intent2 = new Intent(MainActivity.this , ChartActivity.class);
+          
+			startActivity( intent2  );
+			return true;
     	}
     	return true;
     	
@@ -356,7 +361,7 @@ public class MainActivity extends Activity {
 
         // Titolo e testo della notifica
         notificationBuilder.setContentTitle("Calamity Watcher Notification");
-        notificationBuilder.setContentText("Allerta idrogeologica area XX");
+        notificationBuilder.setContentText("Allerta idrogeologica area Misa");
 
         // Testo che compare nella barra di stato non appena compare la notifica
         notificationBuilder.setTicker("Allerta!");

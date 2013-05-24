@@ -33,7 +33,7 @@ public class MyDatabase {
 	}
 
 	// BACINI
-	public void inseisciBacino(int id, String nome) {
+	public void inserisciBacino(int id, String nome) {
 		ContentValues cv = new ContentValues();
 		cv.put(BacinoMetaData.ID, id);
 		cv.put(BacinoMetaData.NOME, nome);
@@ -61,9 +61,9 @@ public class MyDatabase {
 
 	// FINE BACINI
 	// STAZIONI
-	public void inseisciStazione(String codice, String nome, int tipo,
+	public void inserisciStazione(String codice, String nome, int tipo,
 			int id_bacino) { 
-		ContentValues cv = new ContentValues();
+				ContentValues cv = new ContentValues();
 		// cv.put(StazioneMetaData.ID, id);
 		cv.put(StazioneMetaData.CODICE, codice);
 		cv.put(StazioneMetaData.NOME, nome);
@@ -101,8 +101,7 @@ public class MyDatabase {
 
 	// FINE STAZIONI
 	// LETTURE
-	public void inseisciLettura(String data, String ora, String valore,
-			String codice) {
+	public void inserisciLettura(String data, String ora, String valore, String codice) {
 		ContentValues cv = new ContentValues();
 		// cv.put(StazioneMetaData.ID, id);
 		cv.put(LetturaMetaData.DATA, data);
@@ -136,7 +135,7 @@ public class MyDatabase {
 			+ LetturaMetaData.ORA
 			+ " text not null,"
 			+ LetturaMetaData.VALORE
-			+ " integer not null,"
+			+ " text not null,"
 			+ LetturaMetaData.ID_STAZIONE + " text not null);";
 
 	// FINE LETTURE
@@ -173,9 +172,11 @@ public class MyDatabase {
 		String sql="SELECT " +
 				" Stazione._id as _id," +
 				" Stazione.codice as codice, " +
-				" Stazione.tipo as tipo" +
-				"FROM Bacino, Stazione " +
-				"WHERE Stazione.id_bacino = Bacino._id AND Bacino._id=\""+id_bacino+"\"";
+				" Stazione.tipo as tipo, " +
+				" Stazione.nome as nome" +
+				" FROM Bacino, Stazione" +
+				" WHERE Stazione.id_bacino = Bacino._id AND Bacino._id="+id_bacino;
+		Log.i("QUERY",sql);
 		Cursor c=mDb.rawQuery(sql, null);
 		ArrayList<String>row=new ArrayList<String>();
 		Log.i("ENRICO", "Cursor di lunghezza: "+c.getCount());

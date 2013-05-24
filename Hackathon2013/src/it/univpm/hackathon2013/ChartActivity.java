@@ -25,7 +25,9 @@ public class ChartActivity extends Activity {
 	private XYSeriesRenderer basinRenderer = new XYSeriesRenderer();
 	private TimeSeries rainDataset= new TimeSeries("Rain Level");
 	private XYSeriesRenderer rainRenderer= new XYSeriesRenderer();
-
+	
+	double[] prova= {1.56,1.76,1.78,1.79,1.85,1.70};
+	int[] ind= {0,1,2,3,4,5};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +46,14 @@ public class ChartActivity extends Activity {
         else{
         	multipleChartView.repaint();
         }
+		
+		adaptGraphToBasin();
+		
+		for (int i=0; i<6; i++){
+			int l=ind.length;
+			addValueToGraph(ind[i], prova[i], 0);
+		}
+		
 		
 		
 		
