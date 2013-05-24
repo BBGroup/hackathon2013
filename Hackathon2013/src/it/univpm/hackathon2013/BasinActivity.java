@@ -66,13 +66,30 @@ public class BasinActivity extends Activity {
 	public void refreshRiga(ArrayList<String> list){
 		LinearLayout layout=(LinearLayout)this.findViewById(R.id.mainLayout);
 		LinearLayout row=new LinearLayout(this);
-		row.setOrientation(LinearLayout.HORIZONTAL);
-		Iterator<String> iter=list.iterator();
-		while(iter.hasNext()){
-			TextView cell=new TextView(this);
-			cell.setText(iter.next().toString());
-			row.addView(cell);
+		row.setOrientation(LinearLayout.VERTICAL);
+//		Iterator<String> iter=list.iterator();
+//		while(iter.hasNext()){
+		if(list.get(4).equals("0")){
+			TextView cell1=new TextView(this);
+			cell1.setText("Livello"+list.get(5));
+			row.addView(cell1);
+			Log.i("XXX",list.get(5));
 		}
+		if(list.get(4).equals("1")){
+			TextView cell1=new TextView(this);
+			cell1.setText("Pioggia"+list.get(5));
+			row.addView(cell1);
+			Log.i("XXX",list.get(5));
+		}
+			TextView cell2=new TextView(this);
+			cell2.setText(list.get(0));
+			row.addView(cell2);
+			Log.i("XXX",list.get(0));
+			Log.i("XXX",list.get(1));
+
+			TextView cell3=new TextView(this);
+			cell3.setText(list.get(1));
+			row.addView(cell3);
 		ImageButton graphButton = new ImageButton (this);
 		graphButton.setImageResource(R.drawable.graph);
 		layout.addView(row);

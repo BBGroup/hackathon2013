@@ -168,7 +168,6 @@ public class HtmlParser {
 				if (!data_livello.equals("")) {
 					ArrayList l = new ArrayList();
 					l.add(data_livello);
-					l.add(data_livello);
 					l.add(livello);
 					l.add(id_stazione);
 					l.add("0");
@@ -241,7 +240,6 @@ public class HtmlParser {
 				mm_pioggia = mm_pioggia.replace(',', '.').trim();
 				if (!data_pioggia.equals("")) {
 					ArrayList l = new ArrayList();
-					l.add(data_pioggia);
 					l.add(data_pioggia);
 					l.add(mm_pioggia);
 					l.add(id_stazione);
