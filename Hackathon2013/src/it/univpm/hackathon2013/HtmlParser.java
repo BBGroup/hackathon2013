@@ -62,6 +62,49 @@ public class HtmlParser {
 		riga.add("arcevia");
 		riga.add(1);
 		bacino0.add(riga);
+		
+		riga = new ArrayList();
+		riga.add("121");
+		riga.add("cesano foce");
+		riga.add(0);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("018");
+		riga.add("Cesano");
+		riga.add(0);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("108");
+		riga.add("Pergola");
+		riga.add(0);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("108");
+		riga.add("Pergola");
+		riga.add(1);
+		bacino1.add(riga);
+		
+		riga = new ArrayList();
+		riga.add("1152");
+		riga.add("foce Metauro");
+		riga.add(0);
+		bacino2.add(riga);
+		riga = new ArrayList();
+		riga.add("017");
+		riga.add("Metauro");
+		riga.add(0);
+		bacino2.add(riga);
+		riga = new ArrayList();
+		riga.add("108");
+		riga.add("Ghilardino");
+		riga.add(0);
+		bacino2.add(riga);
+		riga = new ArrayList();
+		riga.add("108");
+		riga.add("Pergola");
+		riga.add(1);
+		bacino1.add(riga);
+		
 
 		// this.activity=activity;
 		// Cursor cr;

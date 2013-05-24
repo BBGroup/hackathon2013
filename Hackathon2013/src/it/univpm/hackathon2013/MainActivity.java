@@ -287,75 +287,75 @@ public class MainActivity extends Activity {
 //        }
 //    }
     
-    private boolean canWriteOnExternalStorage() {
-    	String state = Environment.getExternalStorageState();
-    	if (Environment.MEDIA_MOUNTED.equals(state)) {
-    	return true;
-    	} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-    	return false;
-    	} else {
-    	return false;
-    	}
-    	}
-    public String date(){
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
-		GregorianCalendar actually = new GregorianCalendar();
-		String actuallyString=sdf.format(actually.getTime());
-		return actuallyString;
-	}
-    public void writeData(String input){
-    	String data=input;
-    	if (canWriteOnExternalStorage()){
-    		// Find the root of the external storage.
-    	    
-    		String date=date();
-    		//Toast.makeText(this, date, Toast.LENGTH_SHORT).show();
-    		
-    		File root = android.os.Environment.getExternalStorageDirectory(); 
-    	    
-    	    File dir = new File (root.getAbsolutePath()+"/calamity");
-    	    dir.mkdirs();
-    	    String dataname="data.txt";
-    	    File datafile = new File(dir, dataname);    	    
-    	    
-    	    
-    	    try {
-    	    	FileOutputStream datafileOut = new FileOutputStream(datafile);
-    	        PrintWriter pw = new PrintWriter(datafileOut);
-    	        //String hrValuesString=hrValues.toString();
-    	        pw.append(data+",");
-    	        pw.close();
-    	        datafileOut.close();
-    	    } catch (FileNotFoundException e) {
-    	        e.printStackTrace();
-    	        Log.i("debuglog", "******* File not found. Did you" +
-    	                " add a WRITE_EXTERNAL_STORAGE permission to the   manifest?");
-    	    } catch (IOException e) {
-    	        e.printStackTrace();
-    	    }
-    	}
-    }
-    
-    public void readData (){
-    	File sdcard = Environment.getExternalStorageDirectory();
-    	File root = android.os.Environment.getExternalStorageDirectory(); 
-    	File dir = new File (root.getAbsolutePath()+"/calamity");
-    	File datafile=new File(dir,"data.txt" );
-    	StringBuilder text = new StringBuilder();
-    	try {
-    	    BufferedReader br = new BufferedReader(new FileReader(datafile));
-    	    String line;
-
-    	    while ((line = br.readLine()) != null) {
-    	        text.append(line);
-    	        text.append('\n');
-    	    }
-    	}
-    	catch (IOException e) {
-    	    //You'll need to add proper error handling here
-    	}
-
-    }
+//    private boolean canWriteOnExternalStorage() {
+//    	String state = Environment.getExternalStorageState();
+//    	if (Environment.MEDIA_MOUNTED.equals(state)) {
+//    	return true;
+//    	} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+//    	return false;
+//    	} else {
+//    	return false;
+//    	}
+//    	}
+//    public String date(){
+//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
+//		GregorianCalendar actually = new GregorianCalendar();
+//		String actuallyString=sdf.format(actually.getTime());
+//		return actuallyString;
+//	}
+//    public void writeData(String input){
+//    	String data=input;
+//    	if (canWriteOnExternalStorage()){
+//    		
+//    	    
+//    		String date=date();
+//    		
+//    		
+//    		File root = android.os.Environment.getExternalStorageDirectory(); 
+//    	    
+//    	    File dir = new File (root.getAbsolutePath()+"/calamity");
+//    	    dir.mkdirs();
+//    	    String dataname="data.txt";
+//    	    File datafile = new File(dir, dataname);    	    
+//    	    
+//    	    
+//    	    try {
+//    	    	FileOutputStream datafileOut = new FileOutputStream(datafile);
+//    	        PrintWriter pw = new PrintWriter(datafileOut);
+//    	       
+//    	        pw.append(data+",");
+//    	        pw.close();
+//    	        datafileOut.close();
+//    	    } catch (FileNotFoundException e) {
+//    	        e.printStackTrace();
+//    	        Log.i("debuglog", "File non trovato" +
+//    	                " permesso nel manifest??");
+//    	    } catch (IOException e) {
+//    	        e.printStackTrace();
+//    	    }
+//    	}
+//    }
+//    
+//    public void readData (){
+//    	File sdcard = Environment.getExternalStorageDirectory();
+//    	File root = android.os.Environment.getExternalStorageDirectory(); 
+//    	File dir = new File (root.getAbsolutePath()+"/calamity");
+//    	File datafile=new File(dir,"data.txt" );
+//    	StringBuilder text = new StringBuilder();
+//    	try {
+//    	    BufferedReader br = new BufferedReader(new FileReader(datafile));
+//    	    String line;
+//
+//    	    while ((line = br.readLine()) != null) {
+//    	        text.append(line);
+//    	        text.append('\n');
+//    	    }
+//    	}
+//    	catch (IOException e) {
+//    	    
+//    	}
+//
+//    }
     
     public void gpsCall(){
     	if(modInt==1){
