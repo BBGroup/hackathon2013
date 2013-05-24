@@ -16,12 +16,22 @@
         android:layout_height="match_parent" >
 
     </ListView>-->
-	<LinearLayout
-	    android:id="@+id/mainLayout"
-	    android:orientation="vertical"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent">
-	</LinearLayout>
+
+
+		<ScrollView
+		    android:id="@+id/scrollView1"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" >
+
+		    <LinearLayout
+		        android:id="@+id/mainLayout"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:orientation="vertical" >
+		    </LinearLayout>
+		</ScrollView>
+
+
     
 
 </LinearLayout>
