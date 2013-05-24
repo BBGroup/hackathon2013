@@ -11,19 +11,35 @@ import java.net.URL;
 import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.database.Cursor;
 
 public class HtmlParser {
+	public ArrayList bacino0=new ArrayList();
+	public ArrayList bacino1=new ArrayList();
+	public ArrayList bacino2=new ArrayList();
+	public ArrayList bacino3=new ArrayList();
 	
 	private Activity activity;
+	private static Timer timer=null;
+	public int bacino;
+	private MyDatabase db;
 	//SqliteManager sm=new SqliteManager(activity);
 //	private static Timer timer=null;
 //	public  ArrayList value= new ArrayList();
 	
 	
 public HtmlParser(Activity activity,int bacino){
+	
 	super();
+	this.activity=activity;
+	this.bacino=bacino;
+	db=new MyDatabase(activity);
+	
+	
 //	this.activity=activity;
 //	Cursor cr;
 //	activity.startManagingCursor(cr);
@@ -42,7 +58,46 @@ public HtmlParser(Activity activity,int bacino){
 //	cr.close();
   
 }
+public void refresh(int id_bacino){
+	int bacino=id_bacino;
+	if(timer!=null){
+		timer.purge();
+		timer.cancel();
+		timer=null;
+		}
+	timer = new Timer();      //timer
+    
+    //il metodo run viene eseguito ad ogni scadenza del timer
+	
+    timer.schedule(
+            new TimerTask() {                    
+                    public void run() { 
+                    	getData();
+                    	System.out.println("TIMER ATTIVO");
+                    }
+            },
+            0,30000
+    );
+}
+                    
 
+private void getData(){
+	db.open();
+	ArrayList <ArrayList<String>> stazioni=db.fetchStazioneByCodiceBacino(bacino);
+	for(int i=0;i<stazioni.size();i++){
+		if(Integer.parseInt(stazioni.get(i).get(2))==0){
+			getLivello(stazioni.get(i).get(1));
+		}else{
+			getPioggia(stazioni.get(i).get(1));
+		
+		}
+	}
+	db.close();
+	//((MainActivity)activity).sendSimpleNotification();
+
+//	getLivello();
+	
+}
 
 private void getLivello(String id_stazione){
 	String data_livello="";
@@ -82,7 +137,7 @@ private void getLivello(String id_stazione){
              	livello=line.substring(line.indexOf('=')+2,line.indexOf(';')-1);
              	livello = livello.replace(',', '.').trim();
              	if(!data_livello.equals("")){
-             		//((BasinActivity)activity).db.inserisciLettura(data_livello, data_livello,livello, id_stazione);
+             		db.inserisciLettura(data_livello, data_livello,livello, id_stazione);
              	}
              	
              	//Double diff=Double.parseDouble(livello)-rilievo_valore.get(2);
@@ -202,4 +257,5 @@ public void bollettino(){
 	     ex.printStackTrace();
 	 }
 }
+
 	 }

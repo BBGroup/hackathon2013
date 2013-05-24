@@ -1,5 +1,7 @@
 package it.univpm.hackathon2013;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -99,7 +101,7 @@ public class MyDatabase {
 
 	// FINE STAZIONI
 	// LETTURE
-	public void inseisciLettura(String data, String ora, int valore,
+	public void inseisciLettura(String data, String ora, String valore,
 			String codice) {
 		ContentValues cv = new ContentValues();
 		// cv.put(StazioneMetaData.ID, id);
@@ -143,7 +145,8 @@ public class MyDatabase {
 	 * @author enrico
 	 *
 	 */
-	public Cursor fetchLettureMisaByCodiceStazione(String codice_stazione) {
+	public ArrayList<ArrayList<String>> fetchLettureMisaByCodiceStazione(String codice_stazione) {
+		ArrayList<ArrayList<String>> result=new ArrayList<ArrayList<String>>();
 		String sql="SELECT " +
 				" Lettura._id as _id," +
 				" Stazione.nome as nome, " +
@@ -152,19 +155,41 @@ public class MyDatabase {
 				" Lettura.valore as valore " +
 				"FROM Lettura, Stazione " +
 				"WHERE Stazione.codice = Lettura.id_stazione AND Lettura.id_stazione =\""+codice_stazione+"\"";
-		try{
-			Cursor c=mDb.rawQuery(sql, null);
-			Log.i("ENRICO", "Cursor di lunghezza: "+c.getCount());
-			c.moveToFirst();
-			while(!c.isAfterLast()){
-				Log.e("TTT","STRINGAAAAAAAAA"+c.getString(2));
-				c.moveToNext();
+		Cursor c=mDb.rawQuery(sql, null);
+		ArrayList<String>row=new ArrayList<String>();
+		Log.i("ENRICO", "Cursor di lunghezza: "+c.getCount());
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			for(int i=0;i<c.getColumnCount();i++){
+				row.add(i,c.getString(i));
 			}
-			return c;
-		}catch(NullPointerException e){
-			return null;
+			result.add(row);
+			c.moveToNext();
 		}
-	}
+		return result;
+		}
+	public ArrayList<ArrayList<String>> fetchStazioneByCodiceBacino(int id_bacino) {
+		ArrayList<ArrayList<String>> result=new ArrayList<ArrayList<String>>();
+		String sql="SELECT " +
+				" Stazione._id as _id," +
+				" Stazione.codice as codice, " +
+				" Stazione.tipo as tipo" +
+				"FROM Bacino, Stazione " +
+				"WHERE Stazione.id_bacino = Bacino._id AND Bacino._id=\""+id_bacino+"\"";
+		Cursor c=mDb.rawQuery(sql, null);
+		ArrayList<String>row=new ArrayList<String>();
+		Log.i("ENRICO", "Cursor di lunghezza: "+c.getCount());
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			for(int i=0;i<c.getColumnCount();i++){
+				row.add(i,c.getString(i));
+			}
+			result.add(row);
+			c.moveToNext();
+		}
+		return result;
+		}
+	
 	
 	private class DbHelper extends SQLiteOpenHelper {
 		public DbHelper(Context context, String name, CursorFactory factory,

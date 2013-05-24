@@ -1,11 +1,17 @@
 package it.univpm.hackathon2013;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class BasinActivity extends Activity {
 
@@ -18,7 +24,7 @@ public class BasinActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(it.univpm.hackathon2013.R.layout.basin_activity);
-		lv = (ListView) this.findViewById(R.id.list);
+		//lv = (ListView) this.findViewById(R.id.list);
 		//TextView productsTv = (TextView) findViewById(R.id.product);
 		MyDatabase db = new MyDatabase(getApplicationContext());
 		db.open();
@@ -99,23 +105,20 @@ public class BasinActivity extends Activity {
 			
 		}
 		// CREAZIONE ADAPTER
-		c = db.fetchLettureMisaByCodiceStazione("003");
-		c.moveToFirst();
-		while(!c.isAfterLast()){
-			Log.e("TUT","STRINGAAAAAAAAA"+c.getString(2));
-			c.moveToNext();
-		}
-		startManagingCursor(c);
-		adapter3 = new SimpleCursorAdapter(this,R.layout.stazione_list_item, c, 
-				new String[] {"data", "ora","valore"},
-				new int[] {R.id.data, R.id.ora, R.id.valore });
-		lv.setAdapter(adapter3);
-		adapter3.getCursor().requery();
+		//c = db.fetchLettureMisaByCodiceStazione("003");
+		//c.moveToFirst();
+//		
+//		startManagingCursor(c);
+//		adapter3 = new SimpleCursorAdapter(this,R.layout.stazione_list_item, c, 
+//				new String[] {"data", "ora","valore"},
+//				new int[] {R.id.data, R.id.ora, R.id.valore });
+//		//lv.setAdapter(adapter3);
+//		adapter3.getCursor().requery();
 		// FINE
 
 		// ESTRAZIONE DATI E INSERIMENTO IN TEXTVIEW
-		int nameCol3 = c.getColumnIndex(MyDatabase.LetturaMetaData.ID);
-		int priceCol3 = c.getColumnIndex(MyDatabase.LetturaMetaData.VALORE);
+//		int nameCol3 = c.getColumnIndex(MyDatabase.LetturaMetaData.ID);
+//		int priceCol3 = c.getColumnIndex(MyDatabase.LetturaMetaData.VALORE);
 
 //		if (c.moveToFirst()) {
 //			do {
@@ -123,8 +126,28 @@ public class BasinActivity extends Activity {
 //						+ ", Price:" + c.getInt(priceCol3) + "\n");
 //			} while (c.moveToNext());
 //		}
-		c.close();
-		db.close();
+//		c.close();
+		//db.close();
+		ArrayList<ArrayList<String>> tabella=db.fetchLettureMisaByCodiceStazione("001");
+		Iterator<ArrayList<String>> iter=tabella.iterator();
+		while(iter.hasNext()){
+			refreshRiga(iter.next());	
+		}
+		
 // FINE GESTIONE STAZIONI
+	}
+	public void refreshRiga(ArrayList<String> list){
+		LinearLayout layout=(LinearLayout)this.findViewById(R.id.mainLayout);
+		LinearLayout row=new LinearLayout(this);
+		row.setOrientation(LinearLayout.HORIZONTAL);
+		Iterator<String> iter=list.iterator();
+		while(iter.hasNext()){
+			TextView cell=new TextView(this);
+			cell.setText(iter.next().toString());
+			row.addView(cell);
+		}
+		ImageButton graphButton = new ImageButton (this);
+		graphButton.setImageResource(R.drawable.graph);
+		layout.addView(row);
 	}
 }

@@ -39,12 +39,12 @@ public class MainActivity extends Activity {
 	int basinInt;
 	int modInt;
 	int bacino=-1;
-	Button misaButton;
-	Button esinoButton;
-	Button cesanoButton;
-	Button metauroButton;
+//	Button misaButton;
+//	Button esinoButton;
+//	Button cesanoButton;
+//	Button metauroButton;
 	
-	Button chartButton;
+//	Button chartButton;
 	Button notifyButton;
 	ImageView mappa;
 	
@@ -56,6 +56,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         getPreferences();
+        
+        HtmlParser _parser = new HtmlParser(this, basinInt);
+        _parser.refresh(basinInt);
         
         Log.d("debuglog","gettedpreferences");
         selArea = (TextView) findViewById(R.id.selectedArea);
@@ -304,6 +307,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	menu.add(Menu.NONE, 1, 1, "Settings");
     	menu.add(Menu.NONE, 2, 2, "Info");
+    	//menu.add(Menu.NONE, 3, 3, "Grafico");
     	menu.add(Menu.NONE, 3, 3, "Quit");
         return true;
     }
@@ -345,8 +349,8 @@ public class MainActivity extends Activity {
     }
     
     
-    private void sendSimpleNotification() {
-
+    public void sendSimpleNotification() {
+    	mNotificationManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
                         MainActivity.this);
 
@@ -363,7 +367,7 @@ public class MainActivity extends Activity {
         // Icona della notifica
         notificationBuilder.setSmallIcon(R.drawable.icona4);
 
-        // Creiamo il pending intent che verrà lanciato quando la notifica
+        // Creiamo il pending intent che verrï¿½ lanciato quando la notifica
         // viene premuta
         Intent notificationIntent = new Intent(this,  MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
