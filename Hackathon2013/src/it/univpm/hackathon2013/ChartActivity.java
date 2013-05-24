@@ -26,8 +26,8 @@ public class ChartActivity extends Activity {
 	private TimeSeries rainDataset= new TimeSeries("Rain Level");
 	private XYSeriesRenderer rainRenderer= new XYSeriesRenderer();
 	
-	double[] prova= {1.56,1.76,1.78,1.79,1.85,1.70};
-	int[] ind= {0,1,2,3,4,5};
+//	double[] prova= {4,4,4,4,4};
+//	int[] ind= {0,1,2,3,4,5};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,6 +36,16 @@ public class ChartActivity extends Activity {
 		
 		
 		graphInitialization();
+		
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			double val = bundle.getDouble("valore", 0);
+			int tipo=bundle.getInt("tipo",0);
+			String nome=bundle.getString("stazione");
+			addValueToGraph(val, tipo, nome);
+		} else {
+			// refreshTabella(db.fetchStazioneByCodiceBacino(0));
+		}
 		
 		if (multipleChartView==null){
         	LinearLayout layout = (LinearLayout) findViewById(R.id.graphView);
@@ -47,12 +57,12 @@ public class ChartActivity extends Activity {
         	multipleChartView.repaint();
         }
 		
-		adaptGraphToBasin();
-		
-		for (int i=0; i<6; i++){
-			int l=ind.length;
-			addValueToGraph(ind[i], prova[i], 0);
-		}
+//		adaptGraphToBasin();
+//		
+//		for (int i=0; i<6; i++){
+//			int l=ind.length;
+//			addValueToGraph(ind[i], prova[i], 0);
+//		}
 		
 		
 		
@@ -74,6 +84,7 @@ public class ChartActivity extends Activity {
 		
 		rainRenderer.setColor(Color.GREEN);
 		rainRenderer.setPointStyle(PointStyle.DIAMOND);
+		
 		rainRenderer.setFillPoints(true);
 		rainRenderer.setLineWidth(2);
 		
@@ -95,27 +106,33 @@ public class ChartActivity extends Activity {
     }
 	
 	public void adaptGraphToBasin(){
-    	multipleRenderer.setRange(new double[] {0,168,0,2});
-    	multipleRenderer.setXTitle("Hours");
+    	multipleRenderer.setRange(new double[] {0,2,0,4});
+    	multipleRenderer.setXTitle(" ");
 		multipleRenderer.setYTitle("Basin Level [m]");
     }
 	
 	public void adaptGraphToRain(){
-    	multipleRenderer.setRange(new double[] {0,7,0,100});
-    	multipleRenderer.setXTitle("Days");
+    	multipleRenderer.setRange(new double[] {0,2,0,50});
+    	multipleRenderer.setXTitle(" ");
 		multipleRenderer.setYTitle("Rain Level [mm]");
 	}
 	
-	public void addValueToGraph (int index, double value, int type){
+	public void addValueToGraph (double value, int type, String stazione){
 		if (type==0){
-			basinDataset.add(index, value);
+			adaptGraphToBasin();
+			basinDataset.add(1, value);
 			if (multipleChartView != null){
+				
+				multipleRenderer.setChartTitle(stazione);
 				multipleChartView.repaint();
+				
 			}
 		}
 		else if (type==1){
-			rainDataset.add(index, value);
+			adaptGraphToRain();
+			rainDataset.add(1, value);
 			if (multipleChartView != null){
+				multipleRenderer.setChartTitle(stazione);
 				multipleChartView.repaint();
 			}
 		}
