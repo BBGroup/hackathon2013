@@ -389,7 +389,7 @@ public class MainActivity extends Activity {
     	menu.add(Menu.NONE, 1, 1, "Settings");
     	menu.add(Menu.NONE, 2, 2, "Info");
     	menu.add(Menu.NONE, 3, 3, "Quit");
-    	menu.add(Menu.NONE,4,4,"Grafico");
+//    	menu.add(Menu.NONE,4,4,"Grafico");
         return true;
     }
     
@@ -408,11 +408,11 @@ public class MainActivity extends Activity {
     	case 3:
     		finish();
     		return true;
-    	case 4:
-    		Intent intent2 = new Intent(MainActivity.this , ChartActivity.class);
-          
-			startActivity( intent2  );
-			return true;
+//    	case 4:
+//    		Intent intent2 = new Intent(MainActivity.this , ChartActivity.class);
+//          
+//			startActivity( intent2  );
+//			return true;
     	}
     	return true;
     	

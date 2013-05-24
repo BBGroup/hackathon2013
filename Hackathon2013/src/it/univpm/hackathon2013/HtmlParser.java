@@ -233,7 +233,7 @@ public class HtmlParser {
 	public void refresh(int id_bacino) {
 		System.out.println("HtmlParser Refresh");
 
-		int bacino = id_bacino;
+		bacino = id_bacino;
 		if (timer != null) {
 			timer.purge();
 			timer.cancel();
@@ -254,8 +254,23 @@ public class HtmlParser {
 
 	private void getData() {
 		// db.open();
+		ArrayList<ArrayList> stazioni=new ArrayList();;
 		letture = new ArrayList();
-		ArrayList<ArrayList> stazioni = bacino0;// db.fetchStazioneByCodiceBacino(bacino);
+		switch (bacino){
+		case 0:
+			stazioni = bacino0;
+			break;
+		case 1:
+			stazioni = bacino1;
+			break;
+		case 2:
+			stazioni = bacino2;
+			break;
+		case 3:
+			stazioni = bacino3;
+			break;
+		}
+		//ArrayList<ArrayList> stazioni = bacino0;// db.fetchStazioneByCodiceBacino(bacino);
 		for (int i = 0; i < stazioni.size(); i++) {
 			if (Integer.parseInt(stazioni.get(i).get(2).toString()) == 0) {
 				getLivello(stazioni.get(i).get(0).toString(), stazioni.get(i)
