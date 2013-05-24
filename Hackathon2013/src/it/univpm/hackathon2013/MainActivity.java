@@ -3,20 +3,30 @@ package it.univpm.hackathon2013;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+//import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
-	
+
+	  private static final int SIMPLE_NOTIFICATION_ID = 1;
+	  NotificationManager mNotificationManager;
 //	String misa="misaBasin";
 //	String cesano="cesanoBasin";
 //	String esino="esinoBasin";
@@ -35,6 +45,8 @@ public class MainActivity extends Activity {
 	Button metauroButton;
 	
 	Button chartButton;
+	Button notifyButton;
+	ImageView mappa;
 	
 	TextView selArea;
 	
@@ -52,61 +64,134 @@ public class MainActivity extends Activity {
         gpsCall();
        
         
-        misaButton = (Button) findViewById(R.id.misabutton);
-        misaButton.setOnClickListener(new OnClickListener()
-        {
-        	@Override
-        	public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
-                intent.putExtra("basin", basinInt);
-				startActivity( intent  );
-			}
-        });
+//        misaButton = (Button) findViewById(R.id.misabutton);
+//        misaButton.setOnClickListener(new OnClickListener()
+//        {
+//        	@Override
+//        	public void onClick(View v) {
+//				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+//                intent.putExtra("basin", basinInt);
+//				startActivity( intent  );
+//			}
+//        });
+//        
+//        metauroButton = (Button) findViewById(R.id.metaurobutton);
+//        metauroButton.setOnClickListener(new OnClickListener() {
+//        	@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+//                intent.putExtra("basin", basinInt);
+//				startActivity( intent  );
+//			}
+//		});
+//        
+//        esinoButton = (Button) findViewById(R.id.esinobutton);
+//        esinoButton.setOnClickListener(new OnClickListener() {
+//        	@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+//                intent.putExtra("basin", basinInt);
+//				startActivity( intent  );
+//			}
+//		});
+//        
+//        cesanoButton = (Button) findViewById(R.id.cesanobutton);
+//        cesanoButton.setOnClickListener(new OnClickListener() {
+//        	@Override
+//			public void onClick(View v) {
+//        		Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+//                intent.putExtra("basin", basinInt);
+//				startActivity( intent  );
+//			}
+//		});
+       
+      
         
-        metauroButton = (Button) findViewById(R.id.metaurobutton);
-        metauroButton.setOnClickListener(new OnClickListener() {
-        	@Override
+  		mNotificationManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        
+      notifyButton = (Button) findViewById(R.id.notifyButton);
+      notifyButton.setOnClickListener(new OnClickListener() {
+      	@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
-                intent.putExtra("basin", basinInt);
-				startActivity( intent  );
+      		sendSimpleNotification();
+
 			}
 		});
         
-        esinoButton = (Button) findViewById(R.id.esinobutton);
-        esinoButton.setOnClickListener(new OnClickListener() {
-        	@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this , BasinActivity.class);
-                intent.putExtra("basin", basinInt);
-				startActivity( intent  );
-			}
-		});
         
-        cesanoButton = (Button) findViewById(R.id.cesanobutton);
-        cesanoButton.setOnClickListener(new OnClickListener() {
-        	@Override
-			public void onClick(View v) {
-        		Intent intent = new Intent(MainActivity.this , BasinActivity.class);
-                intent.putExtra("basin", basinInt);
-				startActivity( intent  );
-			}
-		});
+        
         
         selArea = (TextView) findViewById(R.id.selectedArea);
         selAreaSetText();
         
         
-        chartButton = (Button) findViewById(R.id.chartButton);
-        chartButton.setOnClickListener(new OnClickListener() {
-        	@Override
-			public void onClick(View v) {
-        		Intent intent = new Intent(MainActivity.this , ChartActivity.class);
-                
-				startActivity( intent  );
-			}
-		});
+//        chartButton = (Button) findViewById(R.id.chartButton);
+//        chartButton.setOnClickListener(new OnClickListener() {
+//        	@Override
+//			public void onClick(View v) {
+//        		Intent intent = new Intent(MainActivity.this , ChartActivity.class);
+//                
+//				startActivity( intent  );
+//			}
+//		});
         
+        mappa = (ImageView) findViewById(R.id.marcheMap);
+        mappa.setOnTouchListener(new OnTouchListener() {
+        	
+			@Override
+			public boolean onTouch(View v, MotionEvent ev) {
+				final int action = ev.getAction();
+				final int evX = (int) ev.getX();
+				final int evY = (int) ev.getY();
+				int lightred=0xfffcb5bd;
+				int lightgreen=0xffb5fcc1;
+				int lightyellow=0xfffafcb5;
+				int lightblue=0xffb5b8fc;
+				int red=0xfffc2a42;
+				int green=0xff4bfe69;
+				int yellow=0xfff8fd43;
+				int blue=0xff555cfe;
+				switch (action) {
+					case MotionEvent.ACTION_DOWN :
+						int touchColor = getHotspotColor (R.id.marcheMap, evX, evY);
+						Log.d("debuglog",String.valueOf(touchColor));
+						if (lightred==touchColor){
+							mappa.setImageResource(R.drawable.marchemet);
+						} else if (lightblue==touchColor){
+							mappa.setImageResource(R.drawable.marcheces);
+						} else if (lightyellow==touchColor){
+							mappa.setImageResource(R.drawable.marcheesi);
+						} else if (lightgreen==touchColor){
+							mappa.setImageResource(R.drawable.marchemis);
+						}
+				   
+						break;
+				 
+					case MotionEvent.ACTION_UP : 
+						int touchColor2 = getHotspotColor (R.id.marcheMap, evX, evY);
+						Log.d("debuglog",String.valueOf(touchColor2));
+						if (red==touchColor2){
+							Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+			                intent.putExtra("basin", 2);
+							startActivity( intent  );
+						} else if (blue==touchColor2){
+							Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+			                intent.putExtra("basin", 1);
+							startActivity( intent  );
+						} else if (yellow==touchColor2){
+							Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+			                intent.putExtra("basin", 3);
+							startActivity( intent  );
+						} else if (green==touchColor2){
+							Intent intent = new Intent(MainActivity.this , BasinActivity.class);
+			                intent.putExtra("basin", 0);
+							startActivity( intent  );
+						}
+						break;
+				}
+				return true;
+			}
+        });
         
     }
     
@@ -117,7 +202,16 @@ public class MainActivity extends Activity {
     	getPreferences();
     	gpsCall();
     	selAreaSetText();
+    	mappa.setImageResource(R.drawable.marche);
     }
+    
+    public int getHotspotColor (int hotspotId, int x, int y) {
+    	  ImageView img = (ImageView) findViewById (hotspotId);
+    	  img.setDrawingCacheEnabled(true); 
+    	  Bitmap hotspots = Bitmap.createBitmap(img.getDrawingCache()); 
+    	  img.setDrawingCacheEnabled(false);
+    	  return hotspots.getPixel(x, y);
+    	}
     
     public void selAreaSetText(){
     	//runOnUiThread(new Runnable() {
@@ -131,19 +225,19 @@ public class MainActivity extends Activity {
 	        		switch (basinInt){
 	        		case 0:
 	        			Log.d("debuglog","misa");
-	        			selArea.setText("Bacino selezionato: Misa");
+	        			selArea.setText("(Bacino selezionato per notifiche: Misa)");
 	        			break;
 	        		case 1:
 	        			Log.d("debuglog","cesano");
-	        			selArea.setText("Bacino selezionato: Cesano");
+	        			selArea.setText("(Bacino selezionato per notifiche: Cesano)");
 	        			break;
 	        		case 2:
 	        			Log.d("debuglog","metauro");
-	        			selArea.setText("Bacino selezionato: Metauro");
+	        			selArea.setText("(Bacino selezionato per notifiche: Metauro)");
 	        			break;
 	        		case 3:
 	        			Log.d("debuglog","esino");
-	        			selArea.setText("Bacino selezionato: Esino");
+	        			selArea.setText("(Bacino selezionato per notifiche: Esino)");
 	        			break;
 	        		}
 	        	//}
@@ -209,7 +303,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	menu.add(Menu.NONE, 1, 1, "Settings");
-    	menu.add(Menu.NONE, 2, 2, "Quit");
+    	menu.add(Menu.NONE, 2, 2, "Info");
+    	menu.add(Menu.NONE, 3, 3, "Quit");
         return true;
     }
     
@@ -222,6 +317,10 @@ public class MainActivity extends Activity {
     		startActivity(settingsIntent);
     		return true;
     	case 2:
+    		Intent intent = new Intent(this, Info.class);
+            startActivityForResult( intent , 1 );
+            return true;
+    	case 3:
     		finish();
     		return true;
     	}
@@ -246,5 +345,37 @@ public class MainActivity extends Activity {
     }
     
     
-    
+    private void sendSimpleNotification() {
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+                        MainActivity.this);
+
+        // Titolo e testo della notifica
+        notificationBuilder.setContentTitle("Calamity Watcher Notification");
+        notificationBuilder.setContentText("Allerta idrogeologica area XX");
+
+        // Testo che compare nella barra di stato non appena compare la notifica
+        notificationBuilder.setTicker("Allerta!");
+
+        // Data e ora della notifica
+        notificationBuilder.setWhen(System.currentTimeMillis());
+
+        // Icona della notifica
+        notificationBuilder.setSmallIcon(R.drawable.icona4);
+
+        // Creiamo il pending intent che verrà lanciato quando la notifica
+        // viene premuta
+        Intent notificationIntent = new Intent(this,  MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                        notificationIntent, 0);
+        
+        notificationBuilder.setContentIntent(contentIntent);
+
+        // Impostiamo il suono, le luci e la vibrazione di default
+        notificationBuilder.setDefaults(Notification.DEFAULT_SOUND
+                        | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
+
+        mNotificationManager.notify(SIMPLE_NOTIFICATION_ID,
+                        notificationBuilder.build());
+}
 }

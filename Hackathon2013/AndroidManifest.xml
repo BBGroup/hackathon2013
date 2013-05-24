@@ -9,11 +9,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/icona4"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="it.univpm.hackathon2013.CalamityWeatherApplication" >
         <activity
             android:name="it.univpm.hackathon2013.MainActivity"
             android:label="@string/app_name"
@@ -37,6 +39,10 @@
         <activity
             android:name="it.univpm.hackathon2013.Settings"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="it.univpm.hackathon2013.Info"
+            android:label="Calamity Watcher - Info" >
         </activity>
     </application>
 

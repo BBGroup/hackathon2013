@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -6,9 +6,10 @@
         <ScrollView android:id="@+id/TopView"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"	
-		android:orientation="vertical">
+		android:orientation="vertical"> -->
 
-<RelativeLayout 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +30,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
-        android:text="Scegli il tuo bacino"
+        android:text="Seleziona Bacino:"
         android:textColor="#FFA500"
         android:textSize="21dp"
         android:textStyle="bold" />
@@ -38,22 +39,13 @@
         android:id="@+id/selectedArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv"
+        android:layout_below="@+id/marcheMap"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="10dp"
         android:text="---"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+         />
 
-    <TextView
-        android:id="@+id/tvbuttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selectedArea"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="Visualizza dati bacini:" />
-
-    <Button
+    <!-- <Button
         android:id="@+id/metaurobutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -84,9 +76,20 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv"
         android:layout_below="@+id/misabutton"
-        android:text="Bacino Esino" />
-
-    <Button
+        android:text="Bacino Esino" />   -->
+        
+    <ImageView 
+        android:id="@+id/marcheMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/marche"
+        android:maxWidth="310dp"
+        android:maxHeight="310dp"
+        
+/> 
+    <!-- <Button
         android:id="@+id/chartButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -94,12 +97,20 @@
         android:layout_alignRight="@+id/esinobutton"
         android:layout_below="@+id/esinobutton"
         android:layout_marginTop="22dp"
-        android:text="Visualizza Grafici" />
-    
-   
+        android:text="Visualizza Grafici" /> -->
+     <Button
+        android:id="@+id/notifyButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/esinobutton"
+        android:layout_below="@+id/esinobutton"
+        android:layout_marginTop="22dp"
+        android:text="Notifica" />
+
 
 </RelativeLayout>
 
-        </ScrollView>
+<!--        </ScrollView>
 
-</LinearLayout>
+</LinearLayout> --> 

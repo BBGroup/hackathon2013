@@ -9,18 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/tv"
+    <!-- <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bacino del Misa"/>
+        android:layout_height="match_parent" >
 
-    <ListView
-        android:id="@+id/lista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    </ListView>
+    </ListView>-->
 
     
 
