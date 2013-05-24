@@ -85,7 +85,7 @@ public class HtmlParser {
 		bacino1.add(riga);
 		
 		riga = new ArrayList();
-		riga.add("1152");
+		riga.add("152");
 		riga.add("foce Metauro");
 		riga.add(0);
 		bacino2.add(riga);
@@ -95,13 +95,56 @@ public class HtmlParser {
 		riga.add(0);
 		bacino2.add(riga);
 		riga = new ArrayList();
-		riga.add("108");
+		riga.add("105");
 		riga.add("Ghilardino");
 		riga.add(0);
 		bacino2.add(riga);
 		riga = new ArrayList();
-		riga.add("108");
-		riga.add("Pergola");
+		riga.add("151");
+		riga.add("fossombrone");
+		riga.add(0);
+		bacino2.add(riga);
+		riga = new ArrayList();
+		riga.add("106");
+		riga.add("Acqualagna");
+		riga.add(0);
+		bacino2.add(riga);
+		riga = new ArrayList();
+		riga.add("107");
+		riga.add("Biscubio");
+		riga.add(0);
+		riga = new ArrayList();
+		bacino2.add(riga);
+		riga.add("101");
+		riga.add("Sant angelo in vado");
+		riga.add(0);
+		bacino2.add(riga);
+		
+		
+		
+		riga = new ArrayList();
+		riga.add("152");
+		riga.add("Foce Metauro");
+		riga.add(1);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("017");
+		riga.add("Metauro");
+		riga.add(1);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("151");
+		riga.add("Fossombrone");
+		riga.add(1);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("107");
+		riga.add("Biscubio");
+		riga.add(1);
+		bacino1.add(riga);
+		riga = new ArrayList();
+		riga.add("101");
+		riga.add("Sant angelo in vado");
 		riga.add(1);
 		bacino1.add(riga);
 		

@@ -71,13 +71,12 @@ public class BasinActivity extends Activity {
 //		while(iter.hasNext()){
 		if(list.get(3).equals("0")){
 			TextView cell1=new TextView(this);
-			cell1.setText("Livello"+list.get(4));
+			cell1.setText("Livello "+list.get(4));
 			row.addView(cell1);
-			Log.i("XXX",list.get(5));
 		}
 		if(list.get(3).equals("1")){
 			TextView cell1=new TextView(this);
-			cell1.setText("Pioggia"+list.get(4));
+			cell1.setText("Pioggia "+list.get(4));
 			row.addView(cell1);
 		}
 			TextView cell2=new TextView(this);
